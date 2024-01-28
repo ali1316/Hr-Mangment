@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Front End</title>
+  <style>
+    body {
+      background-color: #f2f2f2; /* Light background color */
+      color: #333; /* Dark text color */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Futuristic font */
+      width: 100%;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd; /* Light border color */
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .form {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #004080; /* Bright blue heading color */
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #555; /* Medium text color */
+      margin-bottom: 20px;
+    }
+
+    table th, table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd; /* Light border color */
+    }
+
+    table th {
+      background-color: #99c2ff; /* Light blue heading background color */
+      color: #004080; /* Bright blue heading color */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Light gray background color */
+    }
+
+    .card {
+      background-color: #fff; /* White card background color */
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light box shadow */
+    }
+
+    .card-header {
+      background-color: #004080; /* Bright blue card header background color */
+      padding: 10px;
+      font-weight: bold;
+      color: #fff; /* White text color */
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Futuristic font */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ddd; /* Light border color */
+      background-color: #f9f9f9; /* Light gray background color */
+      color: #333; /* Dark text color */
+    }
+
+    select {
+      height: 34px;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin-right: 8px;
+      border-radius: 4px;
+      border: none;
+      color: #fff; /* White text color */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0066cc; /* Brighter blue on hover */
+    }
+
+    .btn-primary {
+      background-color: #004080; /* Bright blue button color */
+    }
+
+    .btn-danger {
+  background-color: #cc0000; /* Bright red button color */
+}
+
+.btn-danger:hover {
+  background-color: #ff2828; /* Keep the hover color red */
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form">
+      <h2>Manage Branches</h2>
+
+      <!-- Branches Table -->
+      <table >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Building Number</th>
+            <th>Street</th>
+            <th>Area</th>
+            <th>City</th>
+            <th>Country</th>
+            <!-- <th>Manager</th> -->
+            <th>Buttons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let branch of branch">
+            <td>{{ branch.name }}</td>
+            <td>{{ branch.building_number }}</td>
+            <td>{{ branch.street }}</td>
+            <td>{{ branch.area }}</td>
+            <td>{{ branch.city }}</td>
+            <td>{{ branch.country }}</td>
+            <!-- <td>{{ getEmployeeName(branch.manager) }}</td> -->
+            <td>
+              <button class="btn btn-primary" (click)="editBranch(branch)">Edit</button>
+              <button class="btn btn-danger" (click)="deleteBranch(branch)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Create or Edit Branch Form -->
+      <div class="card">
+        <div class="card-header">{{ branchFormTitle }}</div>
+        
+        <div class="card-body" >
+          <form #branchForm="ngForm" (ngSubmit)="submitBranchForm()" >
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" [(ngModel)]="branchFormValues.name" required>
+            </div>
+            <div class="form-group">
+              <label for="buildingNo">Building Number</label>
+              <input type="text" class="form-control" id="building_number" name="building_number" placeholder="Enter building number" [(ngModel)]="branchFormValues.building_number" required>
+            </div>
+            <div class="form-group">
+              <label for="street">Street</label>
+              <input type="text" class="form-control" id="street" name="street" placeholder="Enter street" [(ngModel)]="branchFormValues.street" required>
+            </div>
+            <div class="form-group">
+              <label for="area">Area</label>
+              <input type="text" class="form-control" id="area" name="area" placeholder="Enter area" [(ngModel)]="branchFormValues.area" required>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" [(ngModel)]="branchFormValues.city" required>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" id="country" name="country" placeholder="Enter country" [(ngModel)]="branchFormValues.country" required>
+            </div>
+            <div class="form-group">
+              <label for="manager">Manager</label>
+              <select class="form-control" id="manager" name="manager" [(ngModel)]="branchFormValues.manager">
+                <option value="">No Manager</option>
+                <option *ngFor="let employee of employee" [value]="employee.manager_id">{{ employee.name }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+      </div>
+      </div>
+      
+      <br><br>
+      
+      <div class="form">
+        <h2>Manage Employees</h2>
+        <!-- Employees Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Branch</th>
+              <th>Buttons</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employee">
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.age }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.number }}</td>
+              <td>{{ getBranchName(employee.employee_branch) }}</td>
+              <td>
+                <button class="btn btn-primary" (click)="editEmployee(employee)">Edit</button>
+                <button class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      
+        <!-- Create or Edit Employee Form -->
+        <div class="card">
+          <div class="card-header">{{ employeeFormTitle }}</div>
+          <div class="card-body">
+            <form #employeeForm="ngForm" (ngSubmit)="submitEmployeeForm()">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" [(ngModel)]="employeeFormValues.name" required>
+              </div>
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="Enter age" [(ngModel)]="employeeFormValues.age" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" [(ngModel)]="employeeFormValues.email" required>
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" id="number" name="number" placeholder="Enter phone number" [(ngModel)]="employeeFormValues.number" required>
+              </div>
+              <div class="form-group">
+                <label for="branch">Branch</label>
+                <select class="form-control" id="branch" name="branch" [(ngModel)]="employeeFormValues.employee_branch">
+                  <option value="">No Branch</option>
+                  <option *ngFor="let branch of branch" [value]="branch.branch_id">{{ branch.name }}</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+</body>
+</html>
+<script>
+  function toggleFormVisibility(formId) {
+    var formContainer = document.getElementById(formId);
+    formContainer.style.display = (formContainer.style.display === 'none' || formContainer.style.display === '') ? 'block' : 'none';
+  }
+</script>
